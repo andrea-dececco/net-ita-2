@@ -1,0 +1,14 @@
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\bin\Debug\net6.0\prima_live.exe
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\bin\Debug\net6.0\prima_live.deps.json
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\bin\Debug\net6.0\prima_live.runtimeconfig.json
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\bin\Debug\net6.0\prima_live.dll
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\bin\Debug\net6.0\prima_live.pdb
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\prima_live.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\prima_live.AssemblyInfoInputs.cache
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\prima_live.AssemblyInfo.cs
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\prima_live.csproj.CoreCompileInputs.cache
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\prima_live.dll
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\refint\prima_live.dll
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\prima_live.pdb
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\prima_live.genruntimeconfig.cache
+C:\Users\pc\Desktop\net-ita-2\prima_live\prima_live\obj\Debug\net6.0\ref\prima_live.dll
