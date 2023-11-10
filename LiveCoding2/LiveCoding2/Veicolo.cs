@@ -10,14 +10,24 @@ namespace LiveCoding2
     {
 
         //modificatore accesso' 'tipo' 'nome' { get; set; }
+        public string Um { get; }
+        public int Speed { get; private set; }
 
-        public int Speed { get; set; }
-
-
-        public void PrintSpeed()
+        public Veicolo(string um)
         {
-            Console.WriteLine(Speed);
-
+            Um = um;
+            
         }
+
+        public void Accellerate() 
+        {
+            Speed++;
+        }
+
+        public override string? ToString()
+        {
+            return $"La velocità attuale: {Speed} {Um}";
+        }
+
     }
 }
