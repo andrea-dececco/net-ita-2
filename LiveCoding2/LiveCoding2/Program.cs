@@ -2,13 +2,19 @@
 
 //varie tipologie di strutture per instanziare un oggetto della classe
 
-Veicolo veicolo = new Veicolo();
+Automobile veicolo = new Automobile("Tesla X");
+
 
 
 //Varie tipologie di richiamare un metodo
 
 //veicolo.SetSpeed(10);
 
-veicolo.Speed = 7;
+veicolo.Accellerate();
+veicolo.Accellerate();
+veicolo.Accellerate();
+veicolo.Accellerate();
+veicolo.Accellerate();
 
-veicolo.PrintSpeed();
+
+Console.WriteLine(veicolo);
