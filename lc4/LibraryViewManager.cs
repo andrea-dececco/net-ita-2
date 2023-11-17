@@ -31,9 +31,7 @@ namespace lc4
 
         public void SearchBook()
         {
-            Console.WriteLine("Scrivi il titolo o l'autore");
-            string? searchValue = Console.ReadLine();
-            List<Book> books = libraryLogic.SearchBook(searchValue);
+            List<Book> books = FindBooksByTitle();
 
             if (!books.Any())
             {
@@ -47,7 +45,33 @@ namespace lc4
 
         public void RentBook()
         {
-            Console.WriteLine("Noleggiato");
+            List<Book> books = FindBooksByTitle();
+            if (!books.Any())
+            {
+                Console.WriteLine("Non ci sono libri");
+                return;
+            } 
+            for (int i = 0; i < books.Count; i++)
+            {
+                Console.WriteLine($"[{i}]-{books[i]}");
+
+            }
+            Console.WriteLine("Scegli un libro digitando l'indice");
+            string scelta = Console.ReadLine();
+            int numero = int.Parse(scelta);
+            Book book = books[numero];
+
+            Console.WriteLine($"Noleggiato {book}");                               
+           
         }
+
+        private List<Book> FindBooksByTitle()
+        {
+            Console.WriteLine("Scrivi il titolo o l'autore");
+            string? searchValue = Console.ReadLine();
+            List<Book> books = libraryLogic.SearchBook(searchValue);
+            return books;
+        }
+
     }
 }
