@@ -2,6 +2,7 @@ namespace lc4
 {
     public class Book
     {
+        public Guid Id { get; } = Guid.NewGuid();
         public string Title { get; set; }
         public string Author { get; set; }
 
