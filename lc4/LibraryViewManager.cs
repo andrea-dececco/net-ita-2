@@ -19,7 +19,7 @@ namespace lc4
                 {'1', SearchBook },
                 {'2', RentBook },
                 {'3', () => Console.WriteLine("Not implemented yet")},
-                {'4', () => Console.WriteLine("Not implemented yet")},
+                {'4', DonateBook },
             };
 
             char selection = Console.ReadKey().KeyChar;
@@ -61,9 +61,35 @@ namespace lc4
             int numero = int.Parse(scelta);
             Book book = books[numero];
 
-            Console.WriteLine($"Noleggiato {book}");                               
+            try
+            {
+                libraryLogic.RentBook(book);
+                Console.WriteLine("Il libro è stato noleggiato!");
+            }
+
+            catch (KeyNotFoundException ex) 
+            {
+                Console.WriteLine("Il libro non è disponibile!");
+            }
+             
            
         }
+
+        public void DonateBook()
+        {
+
+            Console.WriteLine("Inserisci il titolo del libro");
+            string? nomelibro = Console.ReadLine();
+
+            Console.WriteLine("Inserisci L'autore del libro");
+            string? autore = Console.ReadLine();
+
+            Book nuovolibro = new(nomelibro, autore);
+            
+            libraryLogic.DonateBook(nuovolibro);
+            Console.WriteLine("Grazie per la tua donazione!");
+        }
+        
 
         private List<Book> FindBooksByTitle()
         {
