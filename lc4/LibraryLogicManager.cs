@@ -36,10 +36,22 @@ namespace lc4
         }
 
         // Noleggia libro
-       
+
+       public void RentBook(Book book){
+        int count = booksDictionary.GetValueOrDefault(book.Id);
+        if( count  == 0){
+            throw new KeyNotFoundException();
+        } 
+        booksDictionary[book.Id] = count--;
+       }
 
 
         // Riconsegna libro
+
+        public void ReturnBook(Book book){
+            int count = booksDictionary.GetValueOrDefault(book.Id);
+                    booksDictionary[book.Id] = count++;
+        }
 
         // Dona libro
         public void DonateBook(Book book)
