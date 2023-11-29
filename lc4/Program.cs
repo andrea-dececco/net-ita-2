@@ -1,6 +1,13 @@
 ﻿using lc4;
+using Microsoft.Extensions.DependencyInjection;
 
-LibraryViewManager viewManager = new();
+var serviceProvider = new ServiceCollection()
+    .AddSingleton<LibraryViewManager>()
+    .AddSingleton<LibraryLogicManager>()
+    .AddSingleton<ILibraryRepositoryManager,WriterRepositoryManager>()
+    .BuildServiceProvider();
+
+LibraryViewManager viewManager = serviceProvider.GetRequiredService<LibraryViewManager>();
 
 while (true)
 {

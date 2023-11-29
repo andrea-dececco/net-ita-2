@@ -4,32 +4,26 @@ namespace lc4
 {
     public class LibraryLogicManager
     {
-        Dictionary<Guid, int> booksDictionary = new()
+        private readonly ILibraryRepositoryManager repository;
+
+        public LibraryLogicManager(ILibraryRepositoryManager libraryRepositoryManager)
         {
-
-        };
-
-
-        private List<Book> books = new()
-        {
-            new("Harry Potter 1", "JKR"),
-            new("Harry Potter 2", "JKR"),
-            new("Le avventure di Pippo Franco", "Mario"),
-        };
+            this.repository = libraryRepositoryManager;
+        }
 
         // Cerca libro
         public List<Book> SearchBook(string? value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                return books;
+                return repository.GetBooks();
             }
 
             //return (from book in books
             //       where book.Title.Contains(value, StringComparison.InvariantCultureIgnoreCase) || book.Author.Contains(value, StringComparison.InvariantCultureIgnoreCase)
             //       select book).ToList();
 
-            return books
+            return repository.GetBooks()
                 .Where(book => book.Title.Contains(value, StringComparison.InvariantCultureIgnoreCase) 
                 || book.Author.Contains(value, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
@@ -37,39 +31,36 @@ namespace lc4
 
         // Noleggia libro
 
-       public void RentBook(Book book){
-  
-        int count = booksDictionary.GetValueOrDefault(book.Id);
-        if( count  == 0){
-            throw new KeyNotFoundException();
-        } 
-        booksDictionary[book.Id] = count - 1;
-       }
+        public void RentBook(Book book)
+        {
+
+            int count = repository.CountBookByID(book.Id);
+            if (count == 0)
+            {
+                throw new KeyNotFoundException();
+            }
+            repository.DecreaseBookCount(book.Id, 1);
+        }
 
 
         // Riconsegna libro
 
         public void ReturnBook(Book book){
-            int count = booksDictionary.GetValueOrDefault(book.Id);
-                    booksDictionary[book.Id] = count + 1;
+            repository.IncreaseBookCount(book.Id, 1);
         }
 
         // Dona libro
         public void DonateBook(Book book)
         {
-            int count;
-            if (books.Any(b => b.Id == book.Id))
+            if (repository.GetBooks().Any(b => b.Id == book.Id))
             {
-                count = booksDictionary.GetValueOrDefault(book.Id);
-                
+                repository.IncreaseBookCount(book.Id, 1);
             } 
             else
             {
-                count = 0;
-                books.Add(book);
+                repository.AddBook(book);
             }
 
-            booksDictionary[book.Id] = count + 1;
         }
     }
 }

@@ -2,8 +2,12 @@ namespace lc4
 {
     public class LibraryViewManager
     {
-        private LibraryLogicManager libraryLogic = new();
+        private readonly LibraryLogicManager libraryLogic;
 
+        public LibraryViewManager(LibraryLogicManager libraryLogic)
+        {
+            this.libraryLogic = libraryLogic;
+        }
 
         public void WelcomeMenu()
         {
