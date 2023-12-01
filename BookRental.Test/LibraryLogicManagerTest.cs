@@ -16,14 +16,27 @@ namespace BookRental.Test
             _libraryLogicManager = new(_libraryRepositoryManagerMock.Object);
         }
 
-        [Theory]
-        [InlineData(2,4)]
-        [InlineData(3,6)]
-        [InlineData(4,8)]
-        public void DoubleNumber_AnyInteger_DoubleResult(int origin, int result)
+        [Fact]
+        public void DonateBook_ExistentBook_CallsIncrementation()
         {
+            Book book = new Book(string.Empty, string.Empty);
+            _libraryRepositoryManagerMock.Setup(r => r.GetBooks()).Returns(() => new List<Book>() { book });
 
-            Assert.Equal(result, _libraryLogicManager.DoubleNumber(origin));
+            _libraryLogicManager.DonateBook(book);
+            _libraryRepositoryManagerMock.Verify(r => r.IncreaseBookCount(book.Id,1),Times.Once);
+            _libraryRepositoryManagerMock.Verify(f => f.AddBook(It.IsAny<Book>()), Times.Never);    // in alternativa  _libraryRepositoryManagerMock.VerifyNoOtherCalls;
+           
+        }
+
+        [Fact]
+        public void DonateBook_NewBook_CallsAddBook()
+        {
+            Book book = new Book(string.Empty, string.Empty);
+            _libraryRepositoryManagerMock.Setup(r => r.GetBooks()).Returns(() => new List<Book>() { new Book(string.Empty,string.Empty) });
+
+            _libraryLogicManager.DonateBook(book);
+            _libraryRepositoryManagerMock.Verify(r => r.IncreaseBookCount(It.IsAny<Guid>(), It.IsAny<int>()), Times.Never);
+            _libraryRepositoryManagerMock.Verify(f => f.AddBook(book), Times.Once);    
 
         }
     }

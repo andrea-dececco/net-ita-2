@@ -60,14 +60,6 @@ namespace BookRental
             {
                 repository.AddBook(book);
             }
-
         }
-
-
-        public int DoubleNumber(int num)
-        {
-            return num * 2;
-        }
-
     }
 }
