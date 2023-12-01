@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace lc4
+namespace BookRental
 {
     public class LibraryLogicManager
     {

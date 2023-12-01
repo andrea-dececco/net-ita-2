@@ -1,4 +1,4 @@
-﻿using lc4;
+﻿using BookRental;
 using Microsoft.Extensions.DependencyInjection;
 
 var serviceProvider = new ServiceCollection()
