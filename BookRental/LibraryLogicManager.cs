@@ -62,5 +62,12 @@ namespace BookRental
             }
 
         }
+
+
+        public int DoubleNumber(int num)
+        {
+            return num * 2;
+        }
+
     }
 }
