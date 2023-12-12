@@ -5,7 +5,6 @@ namespace SnailRacing.BusinessLogic.Interfaces
         void CreateRace();
         string GetRaceDetails();
         void StartRace();
-        void ViewRaceStatus();
-        void ViewResults();
+        Race GetRaceStatus();
     }
 }

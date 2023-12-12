@@ -25,7 +25,25 @@ namespace SnailRacing.View
             Console.WriteLine("Inizio gara");
             _raceLogic.StartRace();
 
-            // visualizzare avanzamento
+            while (true)
+            {
+                Console.WriteLine("Press any key to view details, press 'e' to exit");
+                Console.WriteLine();
+                var c = Console.ReadKey().KeyChar;
+                if (c == 'e')
+                {
+                    break;
+                }
+
+                Race race = _raceLogic.GetRaceStatus();
+                foreach (var dict in race.GetCurrentRaceProgression())
+                {
+                    Console.WriteLine($"{dict.Key.Name} ({dict.Key.Number}): {dict.Value}/{race.Length}");
+                }
+            }
+
+
+
 
             // visualizzare risultati
         }

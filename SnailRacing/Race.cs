@@ -1,43 +1,80 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace SnailRacing
 {
     public class Race
     {
         public int Length { get; set; }
+        public bool IsInProgress { get; set; }
         public List<Snail> ParticipantSnails { get; set; }
-        public ConcurrentQueue<Snail> Placing { get; set; } = new();
+        private ConcurrentDictionary<Snail, TimeSpan> _placing { get; set; } = new();
+        private ConcurrentDictionary<Snail, int> _currentRaceProgression = new();
+        private Stopwatch _timer = new();
+        private Func<Race, Task> _raceFinishedCallback;
 
-        public bool IsRaceFinished { get => ParticipantSnails.Count == Placing.Count; }
+        public Race() { }
 
-        public Race(int length, List<Snail> participantSnails)
+        public Race(int length, List<Snail> participantSnails, Func<Race, Task> raceFinishedCallback)
         {
             Length = length;
             ParticipantSnails = participantSnails;
+            _raceFinishedCallback = raceFinishedCallback;
         }
 
         public void Start()
         {
-            List<Task> tasks = new();
+            _timer.Start();
+            IsInProgress = true;
+
             foreach (Snail snail in ParticipantSnails)
             {
+                _currentRaceProgression[snail] = 0;
+
                 Task t = Task.Run(async () =>
                 {
-                    while (snail.CurrentRaceProgression <= Length)
+                    while (_currentRaceProgression[snail] <= Length)
                     {
                         await Task.Delay(snail.FrequencyMs);
-                        Interlocked.Add(ref snail.CurrentRaceProgression, ThrowDice());
-                        Console.WriteLine($"Snail {snail.Name} => Progression {snail.CurrentRaceProgression}/{Length}");
+                        _currentRaceProgression.AddOrUpdate(snail, 0, (snail, old) => old + ThrowDice());
                     }
 
-                    Placing.Enqueue(snail);
+                    //Console.WriteLine($"Snail {snail.Name} => Arrived in {_timer.Elapsed.TotalSeconds:0.000} seconds");
+                    SnailArrived(snail);
                 });
-                tasks.Add(t);
+            }
+        }
+
+        public ConcurrentDictionary<Snail, int> GetCurrentRaceProgression()
+        {
+            return _currentRaceProgression;
+        }
+
+        private void SnailArrived(Snail snail)
+        {
+            _placing[snail] = _timer.Elapsed;
+
+            if (_placing.Count == ParticipantSnails.Count)
+            {
+                RaceFinished();
+            }
+        }
+
+        private void RaceFinished()
+        {
+            _timer.Stop();
+            Console.WriteLine("Race finished, order:");
+
+            List<Snail> orderedSnails = _placing.OrderBy(x => x.Value).Select(x => x.Key).ToList();
+
+            for (int i = 0; i < orderedSnails.Count; i++)
+            {
+                var s = orderedSnails[i];
+                Console.WriteLine($"pos{i + 1}: {s.Name} ({s.Number}): {_placing[s].TotalSeconds:0.000}");
             }
 
-            Task.WaitAll(tasks.ToArray());
-
-            Console.WriteLine("Race finished");
+            _raceFinishedCallback(this);
+            IsInProgress = false;
         }
 
         private int ThrowDice()
