@@ -4,6 +4,7 @@ namespace WebApplication2.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {
+
         public static List<Employee> employees = new List<Employee>();
 
         public void AddEmployee(Employee employee)
