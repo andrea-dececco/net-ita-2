@@ -8,7 +8,8 @@
         public string? Email { get; set; }
         public decimal? Ral { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public string? BirthPlace { get; set; }  
+        public string? BirthPlace { get; set; } 
+        public Guid? RoleId { get; set; }
        
     }
 }
